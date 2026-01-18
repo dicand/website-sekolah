@@ -1336,54 +1336,53 @@ export default function App() {
 
   // Fetch News Data
   useEffect(() => {
-    if (!user || !db) return;
-    const newsRef = collection(db, 'artifacts', appId, 'public', 'data', 'news');
-    const unsubscribeNews = onSnapshot(newsRef, (snapshot) => {
-      const newsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      newsData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-      setNews(newsData);
-      setLoading(false);
-    });
-    return () => unsubscribeNews();
-  }, [user]);
+     if(!db) return; // Hapus pengecekan user!
+     const newsRef = collection(db, 'artifacts', appId, 'public', 'data', 'news');
+     const unsubscribeNews = onSnapshot(newsRef, (snapshot) => {
+       const newsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+       newsData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+       setNews(newsData);
+       setLoading(false);
+     });
+     return () => unsubscribeNews();
+  }, []); // <--- Kosongkan dependency array agar jalan saat website dibuka
 
   // Fetch Gallery Data
   useEffect(() => {
-    if (!user || !db) return;
-    const galleryRef = collection(db, 'artifacts', appId, 'public', 'data', 'gallery');
-    const unsubscribeGallery = onSnapshot(galleryRef, (snapshot) => {
-      const galleryData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      galleryData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-      setGallery(galleryData);
-      setLoadingGallery(false);
-    });
-    return () => unsubscribeGallery();
-  }, [user]);
+     if(!db) return; // Hapus pengecekan user
+     const galleryRef = collection(db, 'artifacts', appId, 'public', 'data', 'gallery');
+     const unsubscribeGallery = onSnapshot(galleryRef, (snapshot) => {
+       const galleryData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+       galleryData.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+       setGallery(galleryData);
+       setLoadingGallery(false);
+     });
+     return () => unsubscribeGallery();
+  }, []);
 
   // Fetch Teachers Data
   useEffect(() => {
-    if (!user || !db) return;
-    const teachersRef = collection(db, 'artifacts', appId, 'public', 'data', 'teachers');
-    const unsubscribeTeachers = onSnapshot(teachersRef, (snapshot) => {
-      const teachersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      teachersData.sort((a, b) => a.name.localeCompare(b.name));
-      setTeachers(teachersData);
-    });
-    return () => unsubscribeTeachers();
-  }, [user]);
+     if(!db) return; // Hapus pengecekan user
+     const teachersRef = collection(db, 'artifacts', appId, 'public', 'data', 'teachers');
+     const unsubscribeTeachers = onSnapshot(teachersRef, (snapshot) => {
+       const teachersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+       teachersData.sort((a, b) => a.name.localeCompare(b.name));
+       setTeachers(teachersData);
+     });
+     return () => unsubscribeTeachers();
+  }, []);
 
   // Fetch Events Data (New)
   useEffect(() => {
-    if (!user || !db) return;
-    const eventsRef = collection(db, 'artifacts', appId, 'public', 'data', 'events');
-    const unsubscribeEvents = onSnapshot(eventsRef, (snapshot) => {
-      const eventsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      // Sort by date ascending
-      eventsData.sort((a, b) => new Date(a.date) - new Date(b.date));
-      setEvents(eventsData);
-    });
-    return () => unsubscribeEvents();
-  }, [user]);
+     if(!db) return; // Hapus pengecekan user
+     const eventsRef = collection(db, 'artifacts', appId, 'public', 'data', 'events');
+     const unsubscribeEvents = onSnapshot(eventsRef, (snapshot) => {
+       const eventsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+       eventsData.sort((a, b) => new Date(a.date) - new Date(b.date));
+       setEvents(eventsData);
+     });
+     return () => unsubscribeEvents();
+  }, []);
 
   useEffect(() => {
     if (currentView === 'profil' && pendingScrollId) {
