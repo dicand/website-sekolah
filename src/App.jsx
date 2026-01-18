@@ -18,12 +18,7 @@ import {
   serverTimestamp,
   updateDoc
 } from 'firebase/firestore';
-import { 
-  getStorage, 
-  ref, 
-  uploadBytes, 
-  getDownloadURL 
-} from 'firebase/storage';
+
 import { 
   Menu, X, Phone, MapPin, Mail, Facebook, Instagram, Youtube, User, LogOut, 
   PlusCircle, Trash2, Calendar, BookOpen, Award, Users, ArrowRight, ChevronRight, 
@@ -32,6 +27,11 @@ import {
   Beaker, Coffee, HeartPulse, Camera, UploadCloud, MonitorUp, Search, GraduationCap, Loader2,
   ChevronLeft, Music, Trophy, Target, Flag
 } from 'lucide-react';
+
+// --- KONFIGURASI CLOUDINARY (GANTI INI!) ---
+// Masukkan Cloud Name dan Upload Preset dari Dashboard Cloudinary Anda
+const CLOUDINARY_CLOUD_NAME = "dam5zuh3h"; // GANTI DENGAN CLOUD NAME ANDA (Langkah 1)
+const CLOUDINARY_UPLOAD_PRESET = "sekolah_preset"; // GANTI DENGAN PRESET ANDA (Langkah 2 - Pastikan Mode UNSIGNED)
 
 // --- Firebase Configuration & Environment Setup ---
 // UPDATED: Fungsi ini sekarang cerdas. Bisa jalan di Canvas Preview DAN Vercel.
@@ -58,7 +58,7 @@ const firebaseConfig = getFirebaseConfig();
 const app = firebaseConfig.apiKey ? initializeApp(firebaseConfig) : null;
 const auth = app ? getAuth(app) : null;
 const db = app ? getFirestore(app) : null;
-const storage = app ? getStorage(app) : null;
+// const storage = app ? getStorage(app) : null;
 
 // Menentukan App ID untuk koleksi database
 let currentAppId = 'school-website-default';
