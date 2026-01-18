@@ -34,7 +34,6 @@ const CLOUDINARY_CLOUD_NAME = "dam5zuh3h"; // GANTI DENGAN CLOUD NAME ANDA (Lang
 const CLOUDINARY_UPLOAD_PRESET = "sekolah_preset"; // GANTI DENGAN PRESET ANDA (Langkah 2 - Pastikan Mode UNSIGNED)
 
 // --- Firebase Configuration & Environment Setup ---
-// UPDATED: Fungsi ini sekarang cerdas. Bisa jalan di Canvas Preview DAN Vercel.
 const getFirebaseConfig = () => {
   // 1. Cek jika berjalan di Canvas Preview (Otomatis)
   if (typeof __firebase_config !== 'undefined') {
@@ -171,7 +170,7 @@ const SchemaOrg = () => {
         "@context": "https://schema.org",
         "@type": "EducationalOrganization",
         "name": "SMAN 2 Koto Kampar Hulu",
-        "url": "https://sman2koto.sch.id", // Ganti dengan domain asli nanti
+        "url": "https://sman2ktkh-snowy.vercel.app", // Ganti dengan domain asli nanti
         "logo": "https://cdn-icons-png.flaticon.com/512/3281/3281329.png",
         "description": "Sekolah Menengah Atas Negeri yang berfokus pada pembentukan karakter dan prestasi akademik di Riau.",
         "address": {
@@ -199,6 +198,82 @@ const SchemaOrg = () => {
             {JSON.stringify(schema)}
         </script>
     );
+};
+
+// --- COMPONENT: INFINITE TYPEWRITER ---
+const Typewriter = ({ 
+  data, 
+  typeSpeed = 50, 
+  deleteSpeed = 30, 
+  pauseEnd = 2000,   // Jeda setelah selesai mengetik (2 detik)
+  pauseStart = 500   // Jeda sebelum mulai mengetik ulang (0.5 detik)
+}) => {
+  const [displayedChars, setDisplayedChars] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Hitung total karakter dari semua segmen
+  const totalChars = data.reduce((acc, curr) => acc + curr.text.length, 0);
+
+  useEffect(() => {
+    let timer;
+
+    // KASUS 1: Sedang Mengetik (Maju)
+    if (!isDeleting && displayedChars < totalChars) {
+      timer = setTimeout(() => {
+        setDisplayedChars((prev) => prev + 1);
+      }, typeSpeed);
+    }
+    // KASUS 2: Selesai Mengetik -> Tunggu -> Mulai Hapus
+    else if (!isDeleting && displayedChars === totalChars) {
+      timer = setTimeout(() => {
+        setIsDeleting(true);
+      }, pauseEnd);
+    }
+    // KASUS 3: Sedang Menghapus (Mundur)
+    else if (isDeleting && displayedChars > 0) {
+      timer = setTimeout(() => {
+        setDisplayedChars((prev) => prev - 1);
+      }, deleteSpeed);
+    }
+    // KASUS 4: Selesai Menghapus -> Tunggu -> Mulai Ngetik Lagi
+    else if (isDeleting && displayedChars === 0) {
+      timer = setTimeout(() => {
+        setIsDeleting(false);
+      }, pauseStart);
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayedChars, isDeleting, totalChars, typeSpeed, deleteSpeed, pauseEnd, pauseStart]);
+
+  // Fungsi Render (Sama seperti sebelumnya, memotong teks berdasarkan displayedChars)
+  const renderText = () => {
+    let charCount = 0;
+    
+    return data.map((segment, index) => {
+      // Hitung berapa karakter dari segmen ini yang boleh tampil
+      const charsToShow = Math.max(0, displayedChars - charCount);
+      // Potong teks
+      const textSegment = segment.text.substring(0, charsToShow);
+      
+      charCount += segment.text.length;
+
+      // Jika charsToShow 0, jangan render span kosong agar rapi
+      if (charsToShow <= 0) return null;
+
+      return (
+        <span key={index} className={segment.className}>
+          {textSegment}
+        </span>
+      );
+    });
+  };
+
+  return (
+    <span className="inline-block min-h-[1.5em]"> {/* min-h agar layout tidak lompat saat kosong */}
+      {renderText()}
+      <span className="animate-pulse font-light text-orange-400">|</span>
+    </span>
+  );
 };
 
 // --- COMPONENTS ---
@@ -396,7 +471,7 @@ const Footer = ({ navigateTo }) => (
           <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden p-1">
             <img loading="lazy" src="https://cdn-icons-png.flaticon.com/512/3281/3281329.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
-          <h3 className="text-xl font-bold text-white">SMAN 2</h3>
+          <h3 className="text-xl font-bold text-white">SMAN 2 KTKH</h3>
         </div>
         <p className="mb-6 text-sm leading-relaxed text-slate-400">
           Mewujudkan generasi penerus bangsa yang cerdas, berkarakter, dan kompetitif dengan sentuhan nilai budaya dan agama.
@@ -636,15 +711,29 @@ const HomeView = ({ navigateTo, news, loading }) => (
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto perspective-1000">
         <div className="mb-6 inline-block animate-fade-in-up" style={{animationDelay: '0.1s'}}>
           <span className="bg-white/10 backdrop-blur-md border border-white/20 text-orange-200 px-6 py-2 rounded-full text-sm font-medium tracking-wide shadow-xl">
-             ✨ Selamat Datang di Website Resmi
+              Selamat Datang di Website Resmi
           </span>
         </div>
         <h1 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight text-white drop-shadow-lg animate-fade-in-up" style={{animationDelay: '0.2s'}}>
           SMAN 2 <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-amber-200">Koto Kampar Hulu</span>
         </h1>
-        <p className="text-lg md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed animate-fade-in-up" style={{animationDelay: '0.3s'}}>
-          Ruang tumbuh bagi generasi <span className="font-semibold text-white">Unggul</span>, <span className="font-semibold text-white">Kreatif</span>, dan <span className="font-semibold text-white">Berakhlak Mulia</span> di era digital.
-        </p>
+        <div className="text-lg md:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed min-h-[60px]">
+          <Typewriter 
+            typeSpeed={50}      // Kecepatan ngetik
+            deleteSpeed={30}    // Kecepatan hapus (biasanya lebih cepat)
+            pauseEnd={2000}     // Baca dulu 2 detik sebelum dihapus
+            pauseStart={500}    // Istirahat sebentar sebelum mulai lagi
+            data={[
+              { text: "Ruang tumbuh bagi generasi ", className: "" },
+              { text: "Unggul", className: "font-semibold text-white" },
+              { text: ", ", className: "" },
+              { text: "Kreatif", className: "font-semibold text-white" },
+              { text: ", dan ", className: "" },
+              { text: "Berakhlak Mulia", className: "font-semibold text-white" },
+              { text: " di era digital.", className: "" },
+            ]} 
+          />
+        </div>
         <div className="flex flex-col md:flex-row gap-4 justify-center animate-fade-in-up" style={{animationDelay: '0.4s'}}>
           <button onClick={() => navigateTo('profil')} className="group bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-10 rounded-full shadow-lg shadow-orange-500/30 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
             Jelajahi Profil <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
