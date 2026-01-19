@@ -10,7 +10,7 @@ const Carousel = ({ images }) => {
     if (isPaused || slides.length === 0) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [slides.length, isPaused]);
 
