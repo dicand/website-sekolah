@@ -56,41 +56,37 @@ const Home = ({ navigateTo, news, loading, gallery }) => (
       </div>
     </div>
 
-    {/* --- STATISTIK (Efek Timbul Modern) --- */}
-    {/* UBAH: bg-white menjadi bg-stone-50 agar kartu putih lebih menonjol (kontras) */}
-    <div className="py-12 bg-stone-50 border-b border-slate-100">
+    <div className="relative z-20 -mt-16 md:-mt-24 pb-12">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        {/* Perubahan: grid-cols-2 di mobile, gap diperkecil */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
           {[
-            { icon: Users, val: "500+", label: "Siswa Aktif", color: "text-blue-600", bg: "bg-blue-50" },
-            { icon: User, val: "45", label: "Guru & Staff", color: "text-orange-600", bg: "bg-orange-50" },
-            { icon: BookOpen, val: "18", label: "Ekstrakurikuler", color: "text-purple-600", bg: "bg-purple-50" },
-            { icon: Award, val: "A", label: "Akreditasi", color: "text-emerald-600", bg: "bg-emerald-50" },
+            { icon: Users, val: "500+", label: "Siswa Aktif", color: "text-blue-500", bg: "bg-blue-50" },
+            { icon: User, val: "45", label: "Guru & Staff", color: "text-orange-500", bg: "bg-orange-50" },
+            { icon: BookOpen, val: "18", label: "Ekstrakurikuler", color: "text-purple-500", bg: "bg-purple-50" },
+            { icon: Award, val: "A", label: "Akreditasi", color: "text-emerald-500", bg: "bg-emerald-50" },
           ].map((stat, idx) => (
             <div
               key={idx}
-              // UPDATE DESAIN KARTU UNTUK EFEK TIMBUL:
-              // 1. shadow-[...] : Menggunakan custom shadow yang lebar dan lembut untuk efek 'mengambang'.
-              // 2. hover:shadow-[...] : Bayangan membesar saat dihover, menambah kesan terangkat.
-              // 3. border-slate-50 : Border dibuat sangat tipis dan terang agar tidak kaku.
-              className="bg-white p-6 rounded-2xl border border-slate-50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-2 flex flex-col items-center text-center group z-10 relative"
+              // Perubahan: Padding dikecilkan (p-4 di mobile), rounded disesuaikan
+              className="bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-100 flex flex-col items-center text-center group"
             >
-              {/* ICON CONTAINER (Tetap Elegan) */}
-              <div className={`w-12 h-12 md:w-16 md:h-16 ${stat.bg} ${stat.color} rounded-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
-                <stat.icon size={20} className="md:hidden" />
-                <stat.icon size={28} className="hidden md:block" />
+              {/* Perubahan: Ukuran Container Icon Responsif (w-10/12 di mobile vs w-16 di desktop) */}
+              <div className={`w-10 h-10 md:w-16 md:h-16 ${stat.bg} rounded-lg md:rounded-2xl flex items-center justify-center mb-2 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                {/* Perubahan: Ukuran Icon Responsif */}
+                <stat.icon size={20} className={`md:hidden ${stat.color}`} /> {/* Icon Mobile */}
+                <stat.icon size={32} className={`hidden md:block ${stat.color}`} /> {/* Icon Desktop */}
               </div>
 
-              {/* ANGKA (Tetap Tegas & Profesional) */}
-              <h3 className="text-2xl md:text-4xl font-extrabold text-slate-800 mb-1 tracking-tight">{stat.val}</h3>
-
-              {/* LABEL */}
-              <p className="text-xs md:text-sm text-slate-500 font-bold uppercase tracking-wider">{stat.label}</p>
+              {/* Perubahan: Ukuran Font Responsif */}
+              <h3 className="text-xl md:text-3xl font-extrabold text-slate-800 mb-0.5 md:mb-1">{stat.val}</h3>
+              <p className="text-xs md:text-base text-slate-500 font-medium">{stat.label}</p>
             </div>
           ))}
         </div>
       </div>
     </div>
+
     {/* UPDATE: Lebar kolom dikurangi (4/12) dan ditambah max-w-xs agar lebih kecil */}
     <div className="py-10 md:py-16 bg-white">
       <div className="container mx-auto px-6">
