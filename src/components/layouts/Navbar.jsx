@@ -38,7 +38,7 @@ const Navbar = ({ currentView, navigateTo, isAdmin, mobileMenuOpen, setMobileMen
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => navigateTo('home')}>
             <div className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all duration-300 ${isSolidNav ? 'border-orange-500 shadow-md' : 'border-white/50 bg-white/10'}`}>
-                <img src="https://cdn-icons-png.flaticon.com/512/3281/3281329.png" alt="Logo Sekolah" className="w-full h-full object-cover p-1" />
+                <img src="https://mediacenter.riau.go.id/img_album/thumb/kabupaten-kampar.png" alt="Logo Sekolah" className="w-full h-full object-cover p-1" />
             </div>
             <div>
               <h1 className={`font-bold text-xl leading-tight tracking-tight ${isSolidNav ? 'text-slate-800' : 'text-white'}`}>SMAN 2</h1>

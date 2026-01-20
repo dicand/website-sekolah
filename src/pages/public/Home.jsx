@@ -94,7 +94,7 @@ const Home = ({ navigateTo, news, loading, gallery }) => (
           <div className="md:w-4/12 w-full max-w-xs relative group perspective-1000 mx-auto md:mx-0">
             <div className="absolute -inset-4 bg-orange-100 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition duration-500"></div>
             <div className="relative transform transition-all duration-500 rotate-2 group-hover:rotate-0 shadow-2xl rounded-2xl overflow-hidden border-4 border-white">
-              <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kepala Sekolah" className="w-full h-auto object-cover" />
+              <img src="https://i.pinimg.com/736x/d5/b2/53/d5b2532b085e287b97c261a82feff137.jpg" alt="Kepala Sekolah" className="w-full h-auto object-cover" />
               <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
                 <h4 className="text-lg font-bold">Drs. H. Mulyadi, M.Pd</h4>
                 <p className="text-orange-300 text-xs">Kepala Sekolah</p>

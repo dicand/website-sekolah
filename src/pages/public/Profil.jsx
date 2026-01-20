@@ -21,7 +21,7 @@ const Profil = ({ navigateTo, teachers }) => (
               <div className="w-full md:w-1/3 flex-shrink-0">
                  <div className="rounded-2xl overflow-hidden shadow-lg border-4 border-slate-50">
                     <img loading="lazy"
-                      src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                      src="https://i.pinimg.com/736x/d5/b2/53/d5b2532b085e287b97c261a82feff137.jpg" 
                       alt="Kepala Sekolah" 
                       className="w-full h-auto object-cover"
                     />
