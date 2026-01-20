@@ -43,7 +43,7 @@ export const SchemaOrg = () => {
         "@context": "https://schema.org",
         "@type": "EducationalOrganization",
         "name": "SMAN 2 Koto Kampar Hulu",
-        "url": "https://sman2ktkh.sch.id", 
+        "url": "https://sman2ktkh-snowy.vercel.app/", 
         "logo": "https://cdn-icons-png.flaticon.com/512/3281/3281329.png",
         "description": "Sekolah Menengah Atas Negeri berprestasi di Riau.",
         "address": {
